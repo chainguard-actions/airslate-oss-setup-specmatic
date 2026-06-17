@@ -1,0 +1,9 @@
+{
+  "status": "self_contained",
+  "entries": [
+    {
+      "path": "dist/setup/index.js",
+      "status": "self_contained"
+    }
+  ]
+}
