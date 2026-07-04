@@ -9,6 +9,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | Version | Tag | Upstream commit |
 |---------|-----|-----------------|
 | v1.7.2 | [`v1.7.2`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/tree/v1.7.2) | [`5ba4bb6`](https://github.com/airslate-oss/setup-specmatic/commit/5ba4bb6f2857de15e53daba4712874797d20361f) |
+| v1.7.4 | [`v1.7.4`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/tree/v1.7.4) | [`0fa3867`](https://github.com/airslate-oss/setup-specmatic/commit/0fa3867acaa2b6b10e16ca6ad8a487ff6799ef8a) |
 
 ## Privacy
 
