@@ -1,0 +1,35 @@
+name: Test basic specmatic setup
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Install Java 17
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends openjdk-17-jre-headless
+          java -version
+      - id: setup
+        uses: .
+        with:
+          specmatic-version: 'stable'
+          token: ${{ github.token }}
+      - name: Assert specmatic-version output is set
+        env:
+          ACTUAL: ${{ steps.setup.outputs.specmatic-version }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ -z "$ACTUAL" ]; then
+            echo "FAIL: specmatic-version output is empty"
+            exit 1
+          fi
+          echo "PASS: specmatic-version output is '$ACTUAL'"
+      - name: Assert specmatic is on PATH
+        run: |
+          if ! command -v specmatic &>/dev/null; then
+            echo "FAIL: specmatic not found on PATH"
+            exit 1
+          fi
+          echo "PASS: specmatic found at $(command -v specmatic)"

@@ -1,0 +1,57 @@
+name: Test specmatic setup with version file
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Install Java 17
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends openjdk-17-jre-headless
+          java -version
+      - id: setup-stable
+        uses: .
+        with:
+          specmatic-version: 'stable'
+          token: ${{ github.token }}
+      - name: Write version file
+        run: |
+          # Try to get version from action output first
+          RAW="${{ steps.setup-stable.outputs.specmatic-version }}"
+          echo "Raw action output: '$RAW'"
+          VERSION=$(echo "$RAW" | grep -oE '[0-9]+\.[0-9]+(\.[0-9]+)?' | head -1)
+          # Fallback: run specmatic --version directly (captures both stdout and stderr)
+          if [ -z "$VERSION" ] && command -v specmatic &>/dev/null; then
+            VERSION=$(specmatic --version 2>&1 | grep -oE '[0-9]+\.[0-9]+(\.[0-9]+)?' | head -1)
+          fi
+          if [ -z "$VERSION" ]; then
+            echo "FAIL: could not determine specmatic version"
+            exit 1
+          fi
+          echo "Writing version '$VERSION' to .specmatic-version"
+          echo "$VERSION" > "$GITHUB_WORKSPACE/.specmatic-version"
+          cat "$GITHUB_WORKSPACE/.specmatic-version"
+      - id: setup-from-file
+        uses: .
+        with:
+          specmatic-version-file: '.specmatic-version'
+          token: ${{ github.token }}
+      - name: Assert specmatic-version output is set
+        env:
+          ACTUAL: ${{ steps.setup-from-file.outputs.specmatic-version }}
+        run: |
+          echo "actual: $ACTUAL"
+          if [ -z "$ACTUAL" ]; then
+            echo "FAIL: specmatic-version output is empty when using version file"
+            exit 1
+          fi
+          echo "PASS: specmatic-version output is '$ACTUAL'"
+      - name: Assert specmatic is on PATH
+        run: |
+          if ! command -v specmatic &>/dev/null; then
+            echo "FAIL: specmatic not found on PATH after version-file install"
+            exit 1
+          fi
+          echo "PASS: specmatic found at $(command -v specmatic)"

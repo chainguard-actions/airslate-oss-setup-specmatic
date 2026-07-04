@@ -1,0 +1,37 @@
+# This file is part of the setup-specmatic.
+#
+# Copyright (c) 2023 airSlate, Inc.
+#
+# For the full copyright and license information, please view
+# the LICENSE file that was distributed with this source code.
+
+name: Setup specmatic environment
+description: Setup a specmatic environment and add it to the PATH.
+author: airSlate, Inc.
+
+inputs:
+  specmatic-version:
+    description: The specmatic version to download (if necessary) and use.
+  specmatic-version-file:
+    description: Path to the version file. Can be any filename. The file must contain the version and nothing else.
+  check-latest:
+    description: Set this option to true if you want the action to always check for the latest available version that satisfies the version spec.
+    default: 'false'
+    required: false
+  token:
+    description: Used to pull node distributions from setup-specmatic. Since there's a default, this is typically not supplied by the user. When running this action on github.com, the default value is sufficient. When running on GitHub Enterprise Server, you can pass a personal access token for github.com if you are experiencing rate limiting.
+    default: ${{ github.server_url == 'https://github.com' && github.token || '' }}
+    required: false
+
+outputs:
+  specmatic-version:
+    description: The installed specmatic version. Useful when given a version range as input.
+
+runs:
+  pre: chainguard-phonehome.js
+  using: node16
+  main: dist/setup/index.js
+
+branding:
+  icon: check-square
+  color: green
