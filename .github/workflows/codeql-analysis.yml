@@ -1,0 +1,65 @@
+# This file is part of the setup-specmatic.
+#
+# Copyright (c) 2023 airSlate, Inc.
+#
+# For the full copyright and license information, please view
+# the LICENSE file that was distributed with this source code.
+
+name: CodeQL analysis
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [main]
+  schedule:
+    - cron: '0 3 * * 0'
+      #      | | | | |
+      #      | | | | |____ day of the week (0 - 6 or SUN-SAT)
+      #      | | | |____ month (1 - 12 or JAN-DEC)
+      #      | | |____ day of the month (1 - 31)
+      #      | |____ hour (0 - 23)
+      #      |____ minute (0 - 59)
+
+jobs:
+  codeql-analysis:
+    name: Analyze
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    # The maximum number of minutes to let a workflow run
+    # before GitHub automatically cancels it. Default: 360
+    timeout-minutes: 30
+
+    strategy:
+      # When set to true, GitHub cancels
+      # all in-progress jobs if any matrix job fails.
+      fail-fast: false
+
+      matrix:
+        language:
+          - JavaScript
+          - TypeScript
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+        with:
+          languages: ${{ matrix.language }}
+          config-file: ./.github/codeql-config.yml
+
+      # Autobuild attempts to build any compiled languages
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@ff2f1c621b7f889edc0d3c761ac2e6a3f8cdb0dd # v4.37.7
