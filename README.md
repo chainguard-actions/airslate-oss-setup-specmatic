@@ -6,11 +6,11 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 
 ## Versions
 
-| Version | Tag | Upstream commit |
-|---------|-----|-----------------|
-| v1.7.2 | [`v1.7.2`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/tree/v1.7.2) | [`5ba4bb6`](https://github.com/airslate-oss/setup-specmatic/commit/5ba4bb6f2857de15e53daba4712874797d20361f) |
-| v1.7.4 | [`v1.7.4`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/tree/v1.7.4) | [`0fa3867`](https://github.com/airslate-oss/setup-specmatic/commit/0fa3867acaa2b6b10e16ca6ad8a487ff6799ef8a) |
-| v1.8.1 | [`v1.8.1`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/tree/v1.8.1) | [`5abf2e2`](https://github.com/airslate-oss/setup-specmatic/commit/5abf2e223d343715518436bf079b35c264a7cd60) |
+| Version | Tag | Upstream commit | Hardening report |
+|---------|-----|-----------------|------------------|
+| v1.7.2 | [`v1.7.2`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/tree/v1.7.2) | [`5ba4bb6`](https://github.com/airslate-oss/setup-specmatic/commit/5ba4bb6f2857de15e53daba4712874797d20361f) | [`HARDENING.md`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/blob/v1.7.2/HARDENING.md) |
+| v1.7.4 | [`v1.7.4`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/tree/v1.7.4) | [`0fa3867`](https://github.com/airslate-oss/setup-specmatic/commit/0fa3867acaa2b6b10e16ca6ad8a487ff6799ef8a) | [`HARDENING.md`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/blob/v1.7.4/HARDENING.md) |
+| v1.8.1 | [`v1.8.1`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/tree/v1.8.1) | [`5abf2e2`](https://github.com/airslate-oss/setup-specmatic/commit/5abf2e223d343715518436bf079b35c264a7cd60) | [`HARDENING.md`](https://github.com/chainguard-actions/airslate-oss-setup-specmatic/blob/v1.8.1/HARDENING.md) |
 
 ## Privacy
 
